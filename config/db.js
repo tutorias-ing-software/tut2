@@ -35,7 +35,7 @@ app.get('/tutor/:id', async (req, res) => {
         FROM tutor t
         JOIN materia_tutor mt ON t.id_tutor = mt.tutor_id
         JOIN materias m ON mt.materia_id = m.id_materia
-        WHERE t.id_tutor = $1
+        WHERE t.id_tutor = 1
       `, [tutorId]);
       res.json(result.rows); // Enviar los datos en formato JSON al frontend
     } catch (err) {
