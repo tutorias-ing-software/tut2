@@ -43,23 +43,8 @@
 
     <section class="subjects">
         <h2>Materias impartidas</h2>
-        <div class="subject-list">
-            <div class="subject">
-                <p>Cálculo Multivariable</p>
-                <div class="rating">★★☆☆☆</div>
-            </div>
-            <div class="subject">
-                <p>Álgebra</p>
-                <div class="rating">☆☆☆☆☆</div>
-            </div>
-            <div class="subject">
-                <p>Cálculo Diferencial</p>
-                <div class="rating">☆☆☆☆☆</div>
-            </div>
-            <div class="subject">
-                <p>Programación Avanzada</p>
-                <div class="rating">☆☆☆☆☆</div>
-            </div>
+        <div class="subject-list", id="subject-list">
+            
         </div>
     </section>
 
@@ -100,6 +85,24 @@
                 editDescriptionBtn.textContent = 'Editar Descripción';
             }
         });
+    
+
+    // Script para obtener los datos del tutor y mostrarlos en el perfil
+    const tutorId = 1; // Suponiendo que queremos ver las materias del tutor con id 1
+    fetch(`/tutor/${tutorId}`)
+        .then(response => response.json())
+        .then(data => {
+            const subjectList = document.getElementById('subject-list');
+
+            // Añadimos cada materia como un div con class "subject"
+            data.forEach(entry => {
+                const subjectElement = document.createElement('div');
+                subjectElement.classList.add('subject'); // Añadimos la clase "subject"
+                subjectElement.innerHTML = `<p>${entry.materia_nombre}</p><div class="rating">☆☆☆☆☆</div>`; 
+                subjectList.appendChild(subjectElement); // Insertamos en el div subject-list
+            });
+        })
+        .catch(error => console.error('Error al obtener los datos del tutor:', error));
     </script>
 </body>
 </html>
