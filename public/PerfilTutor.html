@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil del Tutor</title>
+    <link rel="stylesheet" href="PerfilTutor.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <img src="/images/ESCUDO-USS_Horizontal_color.png" alt="Logo Universidad San Sebastián" class="logo" id="logouss">
+            <input type="text" placeholder="Buscar" class="search-bar">
+        </div>
+    </header>
+
+    <div class="profile-info-container">
+        <div class="profile-left">
+            <img src="/images/termait.png" alt="Foto de perfil" class="profile-img" id="profileImage">
+            <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+            <div class="profile-details">
+                <p><strong>Nombre:</strong> Apellido Apellido2</p>
+                <p><strong>Rol:</strong> Tutor</p>
+                <p><strong>Sede:</strong> Bellavista</p>
+                <p><strong>Carrera:</strong> Ing. Civil Informática</p>
+                <p><strong>Año admisión:</strong> 2021</p>
+                <p><strong>Correo electrónico:</strong> ejemplo@correo.uss.cl</p>
+            </div>
+        </div>
+
+        <div class="profile-stats">
+            <i class="heart-icon">❤️</i>
+            <p>100</p>
+            <div class="rating">★★★★☆</div>
+        </div>
+    </div>
+
+    <section class="about">
+        <label for="description">Cuéntanos sobre ti:</label>
+        <textarea id="description" placeholder="Agrega una breve descripción sobre ti..." readonly></textarea>
+        <button id="editDescriptionBtn">Editar Descripción</button>
+    </section>
+
+    <section class="subjects">
+        <h2>Materias impartidas</h2>
+        <div class="subject-list">
+            <div class="subject">
+                <p>Cálculo Multivariable</p>
+                <div class="rating">★★☆☆☆</div>
+            </div>
+            <div class="subject">
+                <p>Álgebra</p>
+                <div class="rating">☆☆☆☆☆</div>
+            </div>
+            <div class="subject">
+                <p>Cálculo Diferencial</p>
+                <div class="rating">☆☆☆☆☆</div>
+            </div>
+            <div class="subject">
+                <p>Programación Avanzada</p>
+                <div class="rating">☆☆☆☆☆</div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Redirección al hacer clic en el logo
+        document.getElementById("logouss").addEventListener('click', function() {
+            window.location.href = "PantallaPrincipal.html";
+        });
+
+        // Subir una nueva imagen de perfil
+        document.getElementById('profileImage').addEventListener('click', function() {
+            document.getElementById('imageUpload').click();
+        });
+
+        document.getElementById('imageUpload').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profileImage').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Habilitar/deshabilitar edición del cuadro de descripción
+        const descriptionTextarea = document.getElementById('description');
+        const editDescriptionBtn = document.getElementById('editDescriptionBtn');
+
+        editDescriptionBtn.addEventListener('click', function() {
+            const isReadonly = descriptionTextarea.hasAttribute('readonly');
+            if (isReadonly) {
+                descriptionTextarea.removeAttribute('readonly');
+                descriptionTextarea.focus();
+                editDescriptionBtn.textContent = 'Guardar Descripción';
+            } else {
+                descriptionTextarea.setAttribute('readonly', true);
+                editDescriptionBtn.textContent = 'Editar Descripción';
+            }
+        });
+    </script>
+</body>
+</html>
