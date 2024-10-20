@@ -25,21 +25,3 @@ async function connectToDatabase() {
 connectToDatabase();
 
 module.exports = pool;
-
-// Ruta para obtener las materias de un tutor
-app.get('/tutor/:id', async (req, res) => {
-    const tutorId = req.params.id;
-    try {
-      const result = await pool.query(`
-        SELECT t.id_tutor AS tutor_id, m.nombre_materia AS materia_nombre
-        FROM tutor t
-        JOIN materia_tutor mt ON t.id_tutor = mt.tutor_id
-        JOIN materias m ON mt.materia_id = m.id_materia
-        WHERE t.id_tutor = 1
-      `, [tutorId]);
-      res.json(result.rows); // Enviar los datos en formato JSON al frontend
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Error en el servidor');
-    }
-  });
