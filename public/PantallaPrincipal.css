@@ -1,157 +1,192 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
-}
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  body {
+    background-color: #f2f2f2;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1f2937;
+    padding: 10px 20px;
+    color: white;
+  }
+  
 
-body {
-  background-color: #f2f2f2;
-}
+  
+  .search-container {
+    display: flex;
+  }
+  
+  .search-bar {
+    padding: 5px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+  }
+  
+  .search-btn {
+    background-color: #fff;
+    border: none;
+    padding: 5px;
+    border-radius: 0 5px 5px 0;
+  }
+  
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .nav-link {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .profile-img {
+    width: 40px;
+    border-radius: 50%;
+  }
+  
+  .main-content {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .subjects {
+    flex: 2;
+  }
+  
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #1f2937;
-  padding: 10px 20px;
-  color: white;
-}
+  
+  .subject-list {
+    list-style: none;
+  }
+  
+  .subject-item {
+    background-color: white;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .subject-item span {
+    display: block;
+    color: #666;
+    font-size: 0.9em;
+  }
+  
 
-.logo {
-  width: 60px;
-}
+  
+  .calendar-icon {
+    text-align: center;
+  }
+  
+  .calendar-icon i {
+    font-size: 2em;
+    margin-bottom: 10px;
+  }
+  
+  .tutors {
+    flex: 3;
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+  }
+  
 
-.search-container {
-  display: flex;
-}
+  
+  .stars {
+    color: gold;
+    margin-bottom: 5px;
+  }
+  
+  .tutor-img {
+    width: 50px;
+    border-radius: 50%;
+    margin: 10px 0;
+  }
+  
+  .tutor-level {
+    color: #666;
+    font-size: 0.9em;
+  }
 
-.search-bar {
-  padding: 5px;
-  border: none;
-  border-radius: 5px 0 0 5px;
-  outline: none;
-}
+  .centro{
+    margin-top: 100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+    
+  }
+  .buscador_materias{
+    
+    margin-left: 50px;
+    
+  }
+  .subject-search {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  .calendar {
+    flex: 1fr;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+    padding: 10px;
+    border-radius: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-right: 50px;
+  }
+  .top-tutors{
+    
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    margin-top: 40px;
+    
 
-.search-btn {
-  background-color: #fff;
-  border: none;
-  padding: 5px;
-  border-radius: 0 5px 5px 0;
-}
-
-.nav {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.nav-link {
-  color: white;
-  text-decoration: none;
-}
-
-.profile-img {
-  width: 40px;
-  border-radius: 50%;
-}
-
-/* Cambios en el contenedor principal para distribuir los elementos */
-.main-content {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 20px;
-  padding: 20px;
-}
-
-/* Ajustes para la sección de materias */
-.subjects {
-  display: flex;
-  flex-direction: column;
-}
-
-.subject-search {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-
-.subject-list {
-  list-style: none;
-}
-
-.subject-item {
-  background-color: white;
-  padding: 15px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.subject-item span {
-  display: block;
-  color: #666;
-  font-size: 0.9em;
-}
-
-/* Ajustes para el calendario y tutores */
-.calendar-top-tutors-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.calendar {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px; /* Menor espacio con los tutores */
-}
-
-.calendar h2 {
-  text-align: center;
-}
-
-.top-tutors {
-  background-color: white;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Ajustes para que los tutores se distribuyan correctamente */
-.tutor-list {
-  display: flex;
-  justify-content: space-between; /* Ajuste de espacio entre tutores */
-}
-
-.tutor-card {
-  background-color: white;
-  padding: 15px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  width: 150px;
-}
-
-.stars {
-  color: gold;
-  margin-bottom: 5px;
-}
-
-.tutor-img {
-  width: 50px;
-  border-radius: 50%;
-  margin: 10px 0;
-}
-
-.tutor-level {
-  color: #666;
-  font-size: 0.9em;
-}
+  }
+    .tutor-cardleft {
+    background-color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+    height: 200px;
+    margin-left: 50px;
+    
+  }
+  .tutor-cardcenter {
+    background-color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+    height: 200px;
+  }
+  .tutor-cardright {
+    background-color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+    height: 200px;
+    margin-right: 50px;
+    
+  }
