@@ -74,10 +74,10 @@
         // Función para manejar el inicio de sesión
         async function handleLogin(e) {
             e.preventDefault(); // Evitar el envío del formulario de forma tradicional
-
+    
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-
+    
             try {
                 const response = await fetch('http://localhost:3000/api/login', {
                     method: 'POST',
@@ -86,11 +86,14 @@
                     },
                     body: JSON.stringify({ email, password })
                 });
-
+    
                 const data = await response.json();
                 if (response.ok) {
-                    alert(data.message); // Inicio de sesión exitoso
-                    window.location.href = '/PantallaPrincipal.html'; // Redirigir a la pantalla principal
+                    // Guardar el ID del usuario en localStorage
+                    localStorage.setItem('usuarioId', data.user.id);
+                    // Mostrar mensaje y redirigir a la pantalla principal
+                    alert(data.message);
+                    window.location.href = '/PantallaPrincipal.html';
                 } else {
                     alert(data.message); // Mostrar error
                 }
@@ -98,55 +101,11 @@
                 console.error('Error en la solicitud:', err);
             }
         }
-
-        // Función para manejar el registro
-        async function handleRegister(e) {
-    e.preventDefault();
-
-    const nombre = document.getElementById('name').value;
-    const email = document.getElementById('registerEmail').value;
-    const password = document.getElementById('registerPassword').value;
-    const birthdate = document.getElementById('birthdate').value;
-    const role = document.getElementById('role').value; // Este valor será "0" o "1"
-
-    try {
-        const response = await fetch('http://localhost:3000/api/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, password, nombre, birthdate, rol: role }) // Asegúrate de pasar el rol correctamente
-        });
-
-        const data = await response.json();
-        if (response.ok) {
-            alert(data.message);
-            window.location.href = '/PantallaPrincipal.html';
-        } else {
-            alert(data.message);
-        }
-    } catch (err) {
-        console.error('Error en la solicitud:', err);
-    }
-}
-
-
-        // Alternar entre el formulario de login y registro
-        document.getElementById('showRegisterForm').addEventListener('click', function() {
-            document.getElementById('loginBox').style.display = 'none';
-            document.getElementById('registerForm').style.display = 'block';
-        });
-
-        document.getElementById('showLoginForm').addEventListener('click', function() {
-            document.getElementById('registerForm').style.display = 'none';
-            document.getElementById('loginBox').style.display = 'block';
-        });
-
+    
         // Vincular la función handleLogin al evento submit del formulario de login
         document.getElementById('loginForm').addEventListener('submit', handleLogin);
-
-        // Vincular la función handleRegister al evento submit del formulario de registro
-        document.querySelector('.register-box form').addEventListener('submit', handleRegister);
     </script>
+    
+    
 </body>
 </html>

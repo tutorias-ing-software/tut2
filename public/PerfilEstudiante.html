@@ -46,42 +46,45 @@
     </section>
 
     <script>
-        // Redirección al hacer clic en el logo
-        document.getElementById("logouss").addEventListener('click', function() {
-            window.location.href = "PantallaPrincipal.html";
-        });
+        document.addEventListener("DOMContentLoaded", () => {
+    // Suponiendo que tienes el ID del usuario almacenado en localStorage después del login
+    const usuarioId = localStorage.getItem('usuarioId'); // Asegúrate de haber almacenado el ID del usuario en algún momento
 
-        // Subir nueva imagen de perfil
-        document.getElementById('profileImage').addEventListener('click', function() {
-            document.getElementById('imageUpload').click();
-        });
+    if (!usuarioId) {
+        alert('Usuario no autenticado');
+        window.location.href = "index.html"; // Redirige al login si el usuario no está autenticado
+        return;
+    }
 
-        document.getElementById('imageUpload').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('profileImage').src = e.target.result;
-                };
-                reader.readAsDataURL(file);
+    // Realizar solicitud para obtener los datos del usuario desde la API
+    fetch(`http://localhost:3000/api/usuario/${usuarioId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('No se pudieron obtener los datos del usuario');
             }
-        });
+            return response.json();
+        })
+        .then(data => {
+            // Actualizar los campos del perfil con los datos recibidos
+            document.querySelector('.profile-details p:nth-child(1)').innerHTML = `<strong>Nombre:</strong> ${data.nombre} ${data.apellido || ''} ${data.apellido2 || ''}`;
+            document.querySelector('.profile-details p:nth-child(2)').innerHTML = `<strong>Rol:</strong> ${data.rol || 'Estudiante'}`;
+            document.querySelector('.profile-details p:nth-child(3)').innerHTML = `<strong>Sede:</strong> ${data.sede}`;
+            document.querySelector('.profile-details p:nth-child(4)').innerHTML = `<strong>Carrera:</strong> ${data.carrera}`;
+            document.querySelector('.profile-details p:nth-child(5)').innerHTML = `<strong>Año admisión:</strong> ${data.ano_admision}`;
+            document.querySelector('.profile-details p:nth-child(6)').innerHTML = `<strong>Correo electrónico:</strong> ${data.email}`;
 
-        // Habilitar/deshabilitar edición de descripción
-        const descriptionTextarea = document.getElementById('description');
-        const editDescriptionBtn = document.getElementById('editDescriptionBtn');
-
-        editDescriptionBtn.addEventListener('click', function() {
-            const isReadonly = descriptionTextarea.hasAttribute('readonly');
-            if (isReadonly) {
-                descriptionTextarea.removeAttribute('readonly');
-                descriptionTextarea.focus();
-                editDescriptionBtn.textContent = 'Guardar Descripción';
-            } else {
-                descriptionTextarea.setAttribute('readonly', true);
-                editDescriptionBtn.textContent = 'Editar Descripción';
+            // Si la descripción está guardada, llenarla
+            if (data.descripcion) {
+                document.getElementById('description').value = data.descripcion;
             }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Hubo un problema al obtener la información del perfil');
         });
+});
+
     </script>
+    
 </body>
 </html>
