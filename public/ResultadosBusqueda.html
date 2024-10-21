@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados de Búsqueda</title>
+    <link rel="stylesheet" href="ResultadosBusqueda.css">
+</head>
+<body>
+    <header>
+        <h1>Resultados de Búsqueda</h1>
+    </header>
+
+    <div id="resultadosContainer"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Obtener el parámetro "query" de la URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('query');
+
+            if (query) {
+                // Realizar una solicitud para buscar los usuarios
+                fetch(`http://localhost:3000/api/buscarUsuarios?query=${encodeURIComponent(query)}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('No se encontraron resultados');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const resultadosContainer = document.getElementById('resultadosContainer');
+                        resultadosContainer.innerHTML = '';
+
+                        if (data.length > 0) {
+                            data.forEach(usuario => {
+                                const usuarioDiv = document.createElement('div');
+                                usuarioDiv.classList.add('resultado');
+                                usuarioDiv.innerHTML = `
+                                    <p><strong>Nombre:</strong> ${usuario.nombre}</p>
+                                    <p><strong>Correo:</strong> ${usuario.email}</p>
+                                    <p><strong>Rol:</strong> ${usuario.rol === '1' ? 'Tutor' : 'Estudiante'}</p>
+                                    <hr>
+                                `;
+                                resultadosContainer.appendChild(usuarioDiv);
+                            });
+                        } else {
+                            resultadosContainer.innerHTML = '<p>No se encontraron usuarios</p>';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        const resultadosContainer = document.getElementById('resultadosContainer');
+                        resultadosContainer.innerHTML = `<p>Error: ${error.message}</p>`;
+                    });
+            } else {
+                alert('No se ingresó ningún término de búsqueda');
+                window.location.href = 'PantallaPrincipal.html';
+            }
+        });
+    </script>
+</body>
+</html>

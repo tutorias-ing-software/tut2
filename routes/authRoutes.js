@@ -94,7 +94,27 @@ router.put('/usuario/:id', async (req, res) => {
     }
 });
 
+// Buscar usuarios
+router.get('/buscarUsuarios', async (req, res) => {
+    const { query } = req.query;
 
+    try {
+        // Realizar búsqueda en la base de datos usando el nombre proporcionado
+        const result = await db.query(
+            `SELECT * FROM usuarios WHERE nombre ILIKE $1`, 
+            [`%${query}%`]
+        );
+
+        if (result.rows.length > 0) {
+            res.status(200).json(result.rows);
+        } else {
+            res.status(404).json({ message: 'No se encontraron usuarios' });
+        }
+    } catch (error) {
+        console.error('Error al buscar usuarios:', error);
+        res.status(500).json({ message: 'Error en el servidor' });
+    }
+});
 
 
 
