@@ -15,7 +15,7 @@ body {
 /* Barra de navegación */
 .nav-bar {
     background-color: #1a2b49;
-    height: 60px;
+    height: 81px;
     display: flex;
     align-items: center;
     padding: 0 20px;

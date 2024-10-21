@@ -12,11 +12,19 @@ body {
 }
 
 header {
-    background-color: #001f5b;
+    background-color: #1a2b49;
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 81px;
+}
+.header-content{
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    align-content: center;
+
 }
 
 .logo {
@@ -24,10 +32,10 @@ header {
 }
 
 .search-bar {
-    padding: 5px;
-    width: 200px;
+    padding: 15px;
+    width: 700px;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 .user-icon {
@@ -41,6 +49,11 @@ header {
     align-items: center; /* Centra verticalmente los elementos */
     padding: 20px;
     border: 1px solid #ddd; /* Opcional: para visualizar mejor el contenedor */
+    background-color: white;
+    border-radius: 50px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
 }
 
 .profile-left {

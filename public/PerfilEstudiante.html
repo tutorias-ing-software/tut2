@@ -10,6 +10,7 @@
     <header>
         <div class="header-content">
             <img src="/images/ESCUDO-USS_Horizontal_color.png" alt="Logo Universidad San Sebastián" class="logo" id="logouss">
+
             <input type="text" placeholder="Buscar" class="search-bar">
         </div>
     </header>
@@ -21,9 +22,9 @@
             <div class="profile-details">
                 <p><strong>Nombre:</strong> Apellido Apellido2</p>
                 <p><strong>Rol:</strong> Estudiante</p>
-                <p><strong>Sede:</strong> Bellavista</p>
-                <p><strong>Carrera:</strong> Ing. Civil Informática</p>
-                <p><strong>Año admisión:</strong> 2021</p>
+                <p><strong>Sede:</strong> No establecido</p>
+                <p><strong>Carrera:</strong> No establecido</p>
+                <p><strong>Año admisión:</strong> No establecido</p>
                 <p><strong>Correo electrónico:</strong> ejemplo@correo.uss.cl</p>
             </div>
         </div>
@@ -68,9 +69,9 @@
             // Actualizar los campos del perfil con los datos recibidos
             document.querySelector('.profile-details p:nth-child(1)').innerHTML = `<strong>Nombre:</strong> ${data.nombre} ${data.apellido || ''} ${data.apellido2 || ''}`;
             document.querySelector('.profile-details p:nth-child(2)').innerHTML = `<strong>Rol:</strong> ${data.rol || 'Estudiante'}`;
-            document.querySelector('.profile-details p:nth-child(3)').innerHTML = `<strong>Sede:</strong> ${data.sede}`;
-            document.querySelector('.profile-details p:nth-child(4)').innerHTML = `<strong>Carrera:</strong> ${data.carrera}`;
-            document.querySelector('.profile-details p:nth-child(5)').innerHTML = `<strong>Año admisión:</strong> ${data.ano_admision}`;
+           // document.querySelector('.profile-details p:nth-child(3)').innerHTML = `<strong>Sede:</strong> ${data.sede}`;
+           // document.querySelector('.profile-details p:nth-child(4)').innerHTML = `<strong>Carrera:</strong> ${data.carrera}`;
+           // document.querySelector('.profile-details p:nth-child(5)').innerHTML = `<strong>Año admisión:</strong> ${data.ano_admision}`;
             document.querySelector('.profile-details p:nth-child(6)').innerHTML = `<strong>Correo electrónico:</strong> ${data.email}`;
 
             // Si la descripción está guardada, llenarla
