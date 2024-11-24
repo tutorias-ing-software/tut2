@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pantalla Principal</title>
+  <link rel="stylesheet" href="PantallaPrincipal.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <!-- FullCalendar CSS -->
+  <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css' rel='stylesheet' />
+
+  <!-- FullCalendar JS -->
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script>
+</head>
+<body>
+  <header class="header">
+    <div class="logo"><img src="images/ESCUDO-USS_Horizontal_color.png" alt="Universidad San Sebastián" id="logouss"></div>
+
+    <div class="search-container">
+      <input type="text" placeholder="Buscar usuario" class="search-bar" id="searchInput">
+      <button class="search-btn" id="searchButton"><i class="fas fa-search"></i></button>
+    </div>
+
+    <div>
+      <nav class="nav">
+        <!-- El rol del usuario se actualizará dinámicamente -->
+        <a href="#" class="nav-link" id="userRole">Estudiante</a>
+        <a href="#" class="nav-link"><i class="fas fa-bell"></i></a>
+        <!-- Imagen de perfil con evento de redirección -->
+        <img 
+          src="images/termait.png" 
+          alt="Perfil" 
+          class="profile-img" 
+          id="profileImage" 
+          style="cursor: pointer;">
+          <a href="#" class="logout-link" id="logoutLink">Cerrar sesión</a> <!-- Enlace para cerrar sesión -->
+
+      </nav>
+    </div>
+  </header>
+
+  <div class="centro">
+    <div class="buscador_materias">
+      <input type="text" placeholder="Buscar asignatura" class="subject-search">
+      <ul class="subject-list">
+        <li class="subject-item">Materia 1<br><span>Descripción</span></li>
+        <li class="subject-item">Materia 2<br><span>Descripción</span></li>
+        <li class="subject-item">Materia 3<br><span>Descripción</span></li>
+        <li class="subject-item">Materia 4<br><span>Descripción</span></li>
+      </ul>
+    </div>
+    <div class="calendar">
+      <!--<h2>Calendario</h2>-->
+      <div id="calendar"></div> <!-- Contenedor para el calendario -->
+    </div>
+  </div>
+
+  <h2 style="text-align: center;margin-top: 50px;">Top Tutores</h2>
+
+  <div class="top-tutors">
+    <div class="tutor-cardleft">
+      <p>Tutor 1</p>
+      <p>Especialidad: Matemáticas</p>
+    </div>
+    <div class="tutor-cardcenter">
+      <p>Tutor 2</p>
+      <p>Especialidad: Física</p>
+    </div>
+    <div class="tutor-cardright">
+      <p>Tutor 3</p>
+      <p>Especialidad: Programación</p>
+    </div>
+  </div>
+
+  <script>
+    // Redirección al hacer clic en la imagen de perfil
+    document.getElementById('profileImage').addEventListener('click', function() {
+      const userRole = localStorage.getItem('usuarioRole');  // Obtener el rol del usuario
+      if (userRole === '0') {
+        window.location.href = "PerfilEstudiante.html";  // Redirigir al perfil del estudiante
+      } else if (userRole === '1') {
+        window.location.href = "PerfilTutor.html";  // Redirigir al perfil del tutor
+      } else {
+        window.location.href = "Login.html";  // Si no tiene rol asignado, redirigir al login
+      }
+    });
+
+    // Inicialización del calendario
+    document.addEventListener('DOMContentLoaded', function() {
+      const calendarEl = document.getElementById('calendar');
+
+      const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        dateClick: function(info) {
+          const eventTitle = prompt('Ingrese el título del evento:');
+          if (eventTitle) {
+            calendar.addEvent({
+              title: eventTitle,
+              start: info.dateStr,
+              allDay: true
+            });
+          }
+        },
+        events: [] // Aquí puedes agregar eventos predeterminados
+      });
+
+      calendar.render();
+    });
+
+    // Evento para el botón de búsqueda usuarios
+    document.getElementById('searchButton').addEventListener('click', function() {
+      const searchValue = document.getElementById('searchInput').value.trim();
+      if (searchValue) {
+        // Redirigir a la página de resultados de búsqueda
+        window.location.href = `ResultadosBusqueda.html?query=${encodeURIComponent(searchValue)}`;
+      }
+    });
+
+    // Permitir búsqueda al presionar "Enter"
+    document.getElementById('searchInput').addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        const searchValue = event.target.value.trim();
+        if (searchValue) {
+          // Redirigir a la página de resultados de búsqueda
+          window.location.href = `ResultadosBusqueda.html?query=${encodeURIComponent(searchValue)}`;
+        }
+      }
+    });
+
+      // Lógica para actualizar el rol del usuario en la interfaz
+      window.onload = function() {
+        const userRole = localStorage.getItem('usuarioRole');  // Obtener el rol del usuario
+        if (userRole) {
+          const roleText = userRole === '0' ? 'Estudiante' : 'Tutor';  // Establecer el texto según el rol
+          document.getElementById('userRole').textContent = roleText;  // Actualizar el texto en la interfaz
+        } else {
+          window.location.href = "index.html";  // Si no está logueado, redirigir al login
+        }
+      };
+
+      // Función para manejar el logout
+      document.getElementById('logoutLink').addEventListener('click', function() {
+        // Eliminar los datos del localStorage
+        localStorage.removeItem('usuarioId');
+        localStorage.removeItem('usuarioRole');
+        
+        // Redirigir a la página de inicio de sesión
+        window.location.href = '/index.html';  // O la URL que corresponde a la página de login
+      });
+    
+  </script>
+</body>
+</html>
