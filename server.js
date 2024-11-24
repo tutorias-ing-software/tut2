@@ -1,44 +1,38 @@
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser'); // Añadido para manejar el cuerpo de las solicitudes
-const authRoutes = require('./routes/authRoutes'); // Asegúrate de que la ruta es correcta
-const db = require('./config/db'); // Importa tu conexión a la base de datos
+const bodyParser = require('body-parser');
+const authRoutes = require('./routes/authRoutes'); // Rutas de autenticación y usuarios
+const db = require('./config/db'); // Configuración de conexión a la base de datos
 const cookieParser = require('cookie-parser');
-require('dotenv').config();  // Cargar variables de entorno
-const jwt = require('jsonwebtoken');
+require('dotenv').config(); // Variables de entorno
 
-const secretKey = process.env.JWT_SECRET;  // Obtener la clave secreta desde el archivo .env
+const app = express(); // Inicializa `app`
 
-const app = express();
+const PORT = process.env.PORT || 3000;
+const secretKey = process.env.JWT_SECRET; // Llave secreta para JWT
 
-
-app.use(cookieParser());  // Habilitar el uso de cookies
-
-
-//app.use(cors());
+// Middleware
+app.use(cookieParser()); // Manejo de cookies
 app.use(cors({
-    origin: process.env.CORS_ORIGIN || 'http://localhost:3000'  // Origen configurable a través de env
+    origin: process.env.CORS_ORIGIN || 'http://localhost:3000', // Configuración de CORS
+    credentials: true, // Permite el uso de credenciales como cookies
 }));
-
-app.use(express.json()); // Para manejar JSON en las solicitudes
+app.use(express.json()); // Para manejar JSON en solicitudes
 app.use(bodyParser.urlencoded({ extended: true })); // Para manejar formularios URL-encoded
 
-// Servir archivos estáticos desde la carpeta public
+// Servir archivos estáticos
 app.use(express.static('public'));
 app.use(express.static('images'));
 
-
-// Definir la ruta para la página de inicio
+// Ruta principal para servir la página inicial
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/index.html'); // Cambia la ruta al archivo index.html
+    res.sendFile(__dirname + '/public/index.html'); // Asegúrate de que el archivo `index.html` esté en la carpeta `public`
 });
 
-const PORT = process.env.PORT || 3000;
-
 // Usar las rutas de autenticación
-app.use('/api', authRoutes);
+app.use('/api', authRoutes); // Mapeo de rutas API
 
-// Inicia el servidor
+// Iniciar el servidor
 app.listen(PORT, () => {
-    console.log(`Servidor escuchando en el puerto ${PORT}`);
+    console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Usuario</title>
+    <link rel="stylesheet" href="PerfilGenerico.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <!-- Asegúrate de agregar un id al logo para identificarlo -->
+            <img src="images/ESCUDO-USS_Horizontal_color.png" alt="Logo Universidad San Sebastián" class="logo" id="logo">
+        </div>
+    </header>
+
+    <div class="profile-info-container">
+        <div class="profile-left">
+            <img src="images/profile-placeholder.png" alt="Foto de perfil" id="profileImage" class="profile-img">
+            <div class="profile-details">
+                <p><strong>Nombre:</strong> <span id="nombre"></span></p>
+                <p><strong>Rol:</strong> <span id="rol"></span></p>
+                <p><strong>Sede:</strong> <span id="sede"></span></p>
+                <p><strong>Carrera:</strong> <span id="carrera"></span></p>
+                <p><strong>Año admisión:</strong> <span id="anoAdmisión"></span></p>
+                <p><strong>Correo electrónico:</strong> <span id="email"></span></p>
+            </div>
+        </div>
+        <div class="profile-stats">
+            <i class="heart-icon">❤️</i>
+            <p id="likes">100</p>
+            <div class="rating">★★★★☆</div>
+        </div>
+    </div>
+
+    <div class="about">
+        <label for="descripcion">Acerca del usuario:</label>
+        <textarea id="descripcion" placeholder="Descripción no disponible..." readonly></textarea>
+    </div>
+
+    <section class="subjects">
+        <h2>Materias impartidas</h2>
+        <div class="subject-list" id="subjectList">
+            <!-- Materias se cargarán aquí dinámicamente -->
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            // Agregar funcionalidad de redirección al logo
+            const logo = document.getElementById('logo');
+            logo.addEventListener('click', function () {
+                window.location.href = 'PantallaPrincipal.html'; // Redirigir a PantallaPrincipal.html
+            });
+
+            // Obtener parámetros de la URL
+            const params = new URLSearchParams(window.location.search);
+            const userId = params.get('id');
+
+            if (!userId) {
+                alert('Usuario no especificado');
+                window.location.href = 'PantallaPrincipal.html';
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/usuario/${userId}`);
+                const user = await response.json();
+
+                if (response.ok) {
+                    document.getElementById('nombre').textContent = user.nombre || 'N/A';
+                    document.getElementById('rol').textContent = user.rol === '0' ? 'Estudiante' : 'Tutor';
+                    document.getElementById('sede').textContent = user.sede || 'N/A';
+                    document.getElementById('carrera').textContent = user.carrera || 'N/A';
+                    document.getElementById('anoAdmisión').textContent = user.ano_admision || 'N/A';
+                    document.getElementById('email').textContent = user.email || 'N/A';
+                    document.getElementById('descripcion').value = user.descripcion || 'Sin descripción disponible';
+                } else {
+                    alert('Usuario no encontrado');
+                    window.location.href = 'PantallaPrincipal.html';
+                }
+            } catch (error) {
+                console.error('Error al cargar el perfil:', error);
+                alert('Error al cargar el perfil');
+                window.location.href = 'PantallaPrincipal.html';
+            }
+        });
+    </script>
+</body>
+</html>
