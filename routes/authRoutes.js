@@ -45,29 +45,22 @@ router.get('/users/:email', async (req, res) => {
         res.status(500).json({ error: 'Error obteniendo usuario' });
     }
 });
-exports.deleteUserById = async (id) => {
-    const result = await pool.query('DELETE FROM usuarios WHERE id = $1 RETURNING *', [id]);
-    return result.rows[0];
-};
-//eliminar usuario por id
-router.delete('/usuario/:id', async (req, res) => {
-    const { id } = req.params;
+
+// Ruta para eliminar un usuario
+router.delete('/users/:email', async (req, res) => {
+    const { email } = req.params;
 
     try {
-        const user = await userController.deleteUserById(id);
+        const user = await userController.deleteUser(email);
         if (user) {
-            res.status(200).json({ message: 'Usuario eliminado exitosamente', user });
+            res.status(200).json({ message: 'Usuario eliminado', user });
         } else {
             res.status(404).json({ message: 'Usuario no encontrado' });
         }
     } catch (error) {
-        console.error('Error eliminando usuario:', error);
-        res.status(500).json({ error: 'Error en el servidor' });
+        res.status(500).json({ error: 'Error eliminando usuario' });
     }
 });
-
-
-
 
 // Obtener perfil de usuario
 router.get('/usuario/:id', async (req, res) => {
