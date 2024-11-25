@@ -89,5 +89,49 @@
             }
         });
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+    // Obtener el parámetro "id" de la URL para identificar el perfil del usuario
+    const urlParams = new URLSearchParams(window.location.search);
+    const usuarioId = urlParams.get('id');
+
+    if (!usuarioId) {
+        console.error('No se proporcionó un ID de usuario en la URL');
+        return;
+    }
+
+    try {
+        // Realizar la solicitud para obtener los datos del usuario
+        const response = await fetch(`http://localhost:3000/api/usuario/${usuarioId}`);
+        if (!response.ok) {
+            throw new Error('Error al obtener los datos del usuario');
+        }
+
+        const user = await response.json();
+
+        // Actualizar la imagen de perfil
+        if (user.profile_image) {
+            document.getElementById('profileImage').src = user.profile_image; // Ruta de la imagen desde la base de datos
+        } else {
+            document.getElementById('profileImage').src = '/images/default-profile.png'; // Imagen predeterminada
+        }
+
+        // Actualizar otros datos del perfil
+        document.querySelector('.profile-details p:nth-child(1)').innerHTML = `<strong>Nombre:</strong> ${user.nombre}`;
+        document.querySelector('.profile-details p:nth-child(2)').innerHTML = `<strong>Rol:</strong> ${user.rol}`;
+        document.querySelector('.profile-details p:nth-child(3)').innerHTML = `<strong>Sede:</strong> ${user.sede || 'No establecido'}`;
+        document.querySelector('.profile-details p:nth-child(4)').innerHTML = `<strong>Carrera:</strong> ${user.carrera || 'No establecido'}`;
+        document.querySelector('.profile-details p:nth-child(5)').innerHTML = `<strong>Año admisión:</strong> ${user.ano_admision || 'No establecido'}`;
+        document.querySelector('.profile-details p:nth-child(6)').innerHTML = `<strong>Correo electrónico:</strong> ${user.email}`;
+    } catch (error) {
+        console.error('Error al cargar el perfil del usuario:', error);
+        alert('Hubo un problema al cargar la información del perfil. Por favor, inténtelo de nuevo.');
+    }
+});
+
+    </script>
+
+
 </body>
 </html>
