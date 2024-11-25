@@ -64,7 +64,7 @@
             if (confirm('¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.')) {
                 const usuarioId = localStorage.getItem('usuarioId');
 
-                fetch(`http://localhost:3000/api/usuario/${usuarioId}`, {
+                fetch(`https://ayudantias-1.onrender.com/api/usuario/${usuarioId}`, {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' }
                 })
@@ -96,7 +96,7 @@
             formData.append('profileImage', file);
 
             try {
-                const response = await fetch(`http://localhost:3000/api/usuario/${usuarioId}/profile-image`, {
+                const response = await fetch(`https://ayudantias-1.onrender.com/api/usuario/${usuarioId}/profile-image`, {
                     method: 'POST',
                     body: formData
                 });
@@ -125,7 +125,7 @@
       if (!usuarioId) return;
 
       try {
-        const response = await fetch(`http://localhost:3000/api/usuario/${usuarioId}`);
+        const response = await fetch(`https://ayudantias-1.onrender.com/api/usuario/${usuarioId}`);
         const user = await response.json();
 
         if (response.ok && user.profile_image) {
