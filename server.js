@@ -21,9 +21,6 @@ const PORT = process.env.PORT || 3000;
 const users = {};
 const secretKey = process.env.JWT_SECRET;
 
-
-
-
 // Middleware
 app.use(cookieParser());
 app.use(cors({
@@ -33,8 +30,10 @@ app.use(cors({
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
 // Servir archivos estáticos desde la carpeta public
 app.use('/images', express.static('public/images'));
+
 
 
 app.use(express.static('public'));
