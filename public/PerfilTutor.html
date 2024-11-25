@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil del Tutor</title>
     <link rel="stylesheet" href="PerfilTutor.css">
 </head>
+
 <body>
     <header>
         <div class="header-content">
-            <img src="/images/ESCUDO-USS_Horizontal_color.png" alt="Logo Universidad San Sebastián" class="logo" id="logouss">
+            <img src="/images/ESCUDO-USS_Horizontal_color.png" alt="Logo Universidad San Sebastián" class="logo"
+                id="logouss">
             <input type="text" placeholder="Buscar" class="search-bar">
         </div>
     </header>
@@ -38,30 +41,62 @@
     <section class="account-actions">
         <button id="deleteAccountBtn" class="delete-button">Borrar Cuenta</button>
     </section>
-    
+
     <script>
         document.getElementById('deleteAccountBtn').addEventListener('click', function () {
             if (confirm('¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.')) {
                 const usuarioId = localStorage.getItem('usuarioId');
-    
+
                 fetch(`http://localhost:3000/api/usuario/${usuarioId}`, {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' }
                 })
-                .then(response => {
-                    if (!response.ok) throw new Error('Error al eliminar la cuenta');
-                    alert('Cuenta eliminada exitosamente');
-                    localStorage.removeItem('usuarioId');
-                    window.location.href = 'index.html';
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('No se pudo eliminar la cuenta. Inténtalo de nuevo más tarde.');
-                });
+                    .then(response => {
+                        if (!response.ok) throw new Error('Error al eliminar la cuenta');
+                        alert('Cuenta eliminada exitosamente');
+                        localStorage.removeItem('usuarioId');
+                        window.location.href = 'index.html';
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('No se pudo eliminar la cuenta. Inténtalo de nuevo más tarde.');
+                    });
             }
         });
+
     </script>
-    
+
+    <script>
+        document.getElementById('imageUpload').addEventListener('change', async function (event) {
+            const usuarioId = localStorage.getItem('usuarioId');
+            const file = event.target.files[0];
+
+            if (!file || !usuarioId) return;
+
+            const formData = new FormData();
+            formData.append('profileImage', file);
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/usuario/${usuarioId}/profile-image`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    document.getElementById('profileImage').src = data.imageUrl; // Actualizar la imagen en el frontend
+                    alert('Imagen actualizada correctamente');
+                } else {
+                    alert('Error al actualizar la imagen');
+                }
+            } catch (error) {
+                console.error('Error al cargar la imagen:', error);
+                alert('Error al cargar la imagen');
+            }
+        });
+
+    </script>
+
     <section class="about">
         <label for="description">Cuéntanos sobre ti:</label>
         <textarea id="description" placeholder="Agrega una breve descripción sobre ti..." readonly></textarea>
@@ -70,36 +105,56 @@
 
     <section class="subjects">
         <h2>Materias impartidas</h2>
-        <div class="subject-list", id="subject-list">
-            
+        <div class="subject-list" , id="subject-list">
+
         </div>
     </section>
 
-    <script>
-        window.onload = function() {
-        const usuarioRole = localStorage.getItem('usuarioRole');
-        // Si no hay rol en el localStorage, redirigir al login
-        if (usuarioRole !== '1') {  // '0' es el rol de estudiante
-            window.location.href = "index.html";  // Redirigir al login
+    
+       <script>
+    document.addEventListener('DOMContentLoaded', async function () {
+      const usuarioId = localStorage.getItem('usuarioId');
+
+      if (!usuarioId) return;
+
+      try {
+        const response = await fetch(`http://localhost:3000/api/usuario/${usuarioId}`);
+        const user = await response.json();
+
+        if (response.ok && user.profile_image) {
+          document.getElementById('profileImage').src = user.profile_image; // URL desde la base de datos
         }
+      } catch (error) {
+        console.error('Error al cargar la imagen de perfil:', error);
+      }
+    });
+  </script>
+    
+    <script>
+        window.onload = function () {
+            const usuarioRole = localStorage.getItem('usuarioRole');
+            // Si no hay rol en el localStorage, redirigir al login
+            if (usuarioRole !== '1') {  // '0' es el rol de estudiante
+                window.location.href = "index.html";  // Redirigir al login
+            }
         };
 
 
         // Redirección al hacer clic en el logo
-        document.getElementById("logouss").addEventListener('click', function() {
+        document.getElementById("logouss").addEventListener('click', function () {
             window.location.href = "PantallaPrincipal.html";
         });
 
         // Subir una nueva imagen de perfil
-        document.getElementById('profileImage').addEventListener('click', function() {
+        document.getElementById('profileImage').addEventListener('click', function () {
             document.getElementById('imageUpload').click();
         });
 
-        document.getElementById('imageUpload').addEventListener('change', function(event) {
+        document.getElementById('imageUpload').addEventListener('change', function (event) {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     document.getElementById('profileImage').src = e.target.result;
                 };
                 reader.readAsDataURL(file);
@@ -110,7 +165,7 @@
         const descriptionTextarea = document.getElementById('description');
         const editDescriptionBtn = document.getElementById('editDescriptionBtn');
 
-        editDescriptionBtn.addEventListener('click', function() {
+        editDescriptionBtn.addEventListener('click', function () {
             const isReadonly = descriptionTextarea.hasAttribute('readonly');
             if (isReadonly) {
                 descriptionTextarea.removeAttribute('readonly');
@@ -121,28 +176,28 @@
                 editDescriptionBtn.textContent = 'Editar Descripción';
             }
         });
+
+
+        /* Script para obtener los datos del tutor y mostrarlos en el perfil
+        const tutorId = 1; // Suponiendo que queremos ver las materias del tutor con id 1
+        fetch(`/tutor/${tutorId}`)
+            .then(response => response.json())
+            .then(data => {
+                const subjectList = document.getElementById('subject-list');
     
+                // Añadimos cada materia como un div con class "subject"
+                data.forEach(entry => {
+                    const subjectElement = document.createElement('div');
+                    subjectElement.classList.add('subject'); // Añadimos la clase "subject"
+                    subjectElement.innerHTML = `<p>${entry.materia_nombre}</p><div class="rating">☆☆☆☆☆</div>`; 
+                    subjectList.appendChild(subjectElement); // Insertamos en el div subject-list
+                });
+            })
+    
+            
+            .catch(error => console.error('Error al obtener los datos del tutor:', error));
+            */
 
-    /* Script para obtener los datos del tutor y mostrarlos en el perfil
-    const tutorId = 1; // Suponiendo que queremos ver las materias del tutor con id 1
-    fetch(`/tutor/${tutorId}`)
-        .then(response => response.json())
-        .then(data => {
-            const subjectList = document.getElementById('subject-list');
-
-            // Añadimos cada materia como un div con class "subject"
-            data.forEach(entry => {
-                const subjectElement = document.createElement('div');
-                subjectElement.classList.add('subject'); // Añadimos la clase "subject"
-                subjectElement.innerHTML = `<p>${entry.materia_nombre}</p><div class="rating">☆☆☆☆☆</div>`; 
-                subjectList.appendChild(subjectElement); // Insertamos en el div subject-list
-            });
-        })
-
-        
-        .catch(error => console.error('Error al obtener los datos del tutor:', error));
-        */
-       
         document.addEventListener("DOMContentLoaded", () => {
             // Suponiendo que tienes el ID del usuario almacenado en localStorage después del login
             const usuarioId = localStorage.getItem('usuarioId'); // Asegúrate de haber almacenado el ID del usuario en algún momento
@@ -183,5 +238,27 @@
                 });
         });
     </script>
+
+    <script>
+       document.addEventListener('DOMContentLoaded', async function () {
+    const usuarioId = localStorage.getItem('usuarioId'); // Obtener ID del usuario autenticado
+
+    if (!usuarioId) return; // Si no hay usuario, salir
+
+    try {
+        const response = await fetch(`http://localhost:3000/api/usuario/${usuarioId}`); // Endpoint para obtener usuario
+        const user = await response.json();
+
+        if (response.ok && user.profile_image) {
+            document.getElementById('profileImage').src = `/${user.profile_image}`; // Cargar la imagen de perfil
+        }
+    } catch (error) {
+        console.error('Error al cargar la imagen de perfil:', error);
+    }
+});
+
+
+    </script>
 </body>
+
 </html>

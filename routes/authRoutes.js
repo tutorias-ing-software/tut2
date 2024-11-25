@@ -3,6 +3,8 @@ const router = express.Router();
 const pool = require('../config/db');
 const authController = require('../controllers/authController');  
 const userController = require('../controllers/userController');
+const multer = require('multer');
+const path = require('path');
 
 // Ruta para iniciar sesión
 router.post('/login', authController.login);
@@ -20,6 +22,20 @@ router.post('/register', async (req, res) => {
     }
 });
 
+// Configuración de Multer para guardar las imágenes en public/images/profiles
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/images/profiles'); // Carpeta donde se guardarán las imágenes
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname)); // Nombre único para cada archivo
+    }
+});
+
+const upload = multer({ storage: storage });
+
+
+
 // Ruta para obtener todos los usuarios
 router.get('/users', async (req, res) => {
     try {
@@ -27,6 +43,21 @@ router.get('/users', async (req, res) => {
         res.status(200).json(users);
     } catch (error) {
         res.status(500).json({ error: 'Error obteniendo usuarios' });
+    }
+});
+
+// Ruta para actualizar la imagen de perfil
+router.post('/usuario/:id/profile-image', upload.single('profileImage'), async (req, res) => {
+    const { id } = req.params;
+    const imageUrl = `/images/profiles/${req.file.filename}`;
+
+    try {
+        // Actualizar la URL de la imagen en la base de datos
+        await pool.query('UPDATE usuarios SET profile_image = $1 WHERE id = $2', [imageUrl, id]);
+        res.status(200).json({ message: 'Imagen actualizada correctamente', imageUrl });
+    } catch (error) {
+        console.error('Error al actualizar la imagen de perfil:', error);
+        res.status(500).json({ error: 'Error al actualizar la imagen de perfil' });
     }
 });
 
@@ -43,6 +74,24 @@ router.get('/users/:email', async (req, res) => {
         res.status(500).json({ error: 'Error obteniendo usuario' });
     }
 });
+
+// Ruta para eliminar un usuario por ID
+router.delete('/usuario/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const user = await userController.deleteUserById(id);
+        if (user) {
+            res.status(200).json({ message: 'Usuario eliminado', user });
+        } else {
+            res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+    } catch (error) {
+        console.error('Error eliminando usuario:', error);
+        res.status(500).json({ error: 'Error eliminando usuario' });
+    }
+});
+
 
 // Ruta para eliminar un usuario
 router.delete('/users/:email', async (req, res) => {
