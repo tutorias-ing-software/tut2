@@ -23,13 +23,14 @@ socket.on('user-disconnected', name => {
 messageForm.addEventListener('submit', e => {
   e.preventDefault()
   const message = messageInput.value
-  appendMessage(`You: ${message}`)
+  appendMessage(`Tú: ${message}`, true);
   socket.emit('send-chat-message', message)
   messageInput.value = ''
 })
 
-function appendMessage(message) {
-  const messageElement = document.createElement('div')
-  messageElement.innerText = message
-  messageContainer.append(messageElement)
+function appendMessage(message, isOutgoing = false) {
+  const messageElement = document.createElement('div');
+  messageElement.innerText = message;
+  messageElement.classList.add(isOutgoing ? 'outgoing' : 'incoming');
+  messageContainer.append(messageElement);
 }
