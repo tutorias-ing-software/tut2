@@ -14,8 +14,12 @@ header {
   display: flex;
   align-items: center;
   padding: 10px 20px;
+  height:81px;
 }
 
+.logouss{
+  height: 81px;
+}
 header img {
   height: 40px;
   margin-right: 10px;
@@ -51,6 +55,11 @@ header img {
   background-color: #007bff;
   color: white;
   margin-left: auto;
+}
+#message-container .incoming {
+  background-color: #e0e0e0;
+  color: rgb(0, 0, 0);
+  margin-right: auto;
 }
 
 #send-container {

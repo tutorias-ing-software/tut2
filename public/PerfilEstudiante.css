@@ -36,6 +36,7 @@ header {
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
+    align-items: center;
 }
 
 .delete-button:hover {
