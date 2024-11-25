@@ -1,244 +1,298 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
-  }
-  
-  body {
-    background-color: #f2f2f2;
-  }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #1a2b49;
-    padding: 10px 20px;
-    color: white;
-  }
-  
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background-color: #f2f2f2;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1a2b49;
+  padding: 10px 20px;
+  color: white;
+}
+
 /* Ajustes para el contenedor de resultados de búsqueda */
 .search-results {
-  /*position: absolute;*/
- 
-  top: 130px; /* Ajustado para que quede en el espacio del recuadro negro */
-  left: 50px; /* Alineado para que esté bajo el logo */
-  background-color: white;
-  border: 10px solid #ccc;
-  width: 100%;
-  max-height: 200px;
-  overflow-y: auto;
-  border-radius: 30px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 10;
+top: 130px; /* Ajustado para que quede en el espacio del recuadro negro */
+left: 50px; /* Alineado para que esté bajo el logo */
+background-color: white;
+border: 10px solid #ccc;
+width: 100%;
+max-height: 200px;
+overflow-y: auto;
+border-radius: 30px;
+box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+z-index: 10;
 }
 
 /* Cada resultado individual */
 .search-result {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-  cursor: pointer;
-  font-size: 0.95rem;
-  color: #333;
+padding: 10px;
+border-bottom: 1px solid #eee;
+cursor: pointer;
+font-size: 0.95rem;
+color: #333;
 }
-.logout-link{
-  background-color: #2C3E50;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  margin: 0 10px;
-  border-radius: 5px;
-  cursor: pointer;
+.logout-link {
+background-color: #2C3E50;
+color: white;
+border: none;
+padding: 10px 20px;
+margin: 0 10px;
+border-radius: 5px;
+cursor: pointer;
 }
 .search-result:hover {
-  background-color: #f7f7f7;
+background-color: #f7f7f7;
 }
 
 /* Ajustes de alineación del header para acomodar espacio */
 .header {
-  position: relative;
-  padding-bottom: 20px; /* Añadido para dejar espacio entre el logo y el recuadro */
+position: relative;
+padding-bottom: 20px; /* Añadido para dejar espacio entre el logo y el recuadro */
 }
 
+.search-container {
+display: flex;
+}
 
+.search-bar {
+padding: 5px;
+border: none;
+border-radius: 5px 0 0 5px;
+outline: none;
+}
 
+.search-btn {
+background-color: #fff;
+border: none;
+padding: 5px;
+border-radius: 0 5px 5px 0;
+}
 
-  
-  .search-container {
-    display: flex;
-  }
-  
-  .search-bar {
-    padding: 5px;
-    border: none;
-    border-radius: 5px 0 0 5px;
-    outline: none;
-  }
-  
-  .search-btn {
-    background-color: #fff;
-    border: none;
-    padding: 5px;
-    border-radius: 0 5px 5px 0;
-  }
-  
-  .nav {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-  
-  .nav-link {
-    color: white;
-    text-decoration: none;
-  }
-  
-  .profile-img {
-    width: 40px;
-    border-radius: 50%;
-  }
-  
-  .main-content {
-    display: flex;
-    gap: 20px;
-    padding: 20px;
-  }
-  
-  .subjects {
-    flex: 2;
-  }
-  
+.nav {
+display: flex;
+align-items: center;
+gap: 15px;
+}
 
-  
-  .subject-list {
-    list-style: none;
-  }
-  
-  .subject-item {
-    background-color: white;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .subject-item span {
-    display: block;
-    color: #666;
-    font-size: 0.9em;
-  }
-  
+.nav-link {
+color: white;
+text-decoration: none;
+}
 
-  
-  .calendar-icon {
-    text-align: center;
-  }
-  
-  .calendar-icon i {
-    font-size: 2em;
-    margin-bottom: 10px;
-  }
-  
-  .tutors {
-    flex: 3;
-    display: flex;
-    justify-content: space-around;
-    gap: 20px;
-  }
-  
+.profile-img {
+width: 40px;
+border-radius: 50%;
+}
 
-  
-  .stars {
-    color: gold;
-    margin-bottom: 5px;
-  }
-  
-  .tutor-img {
-    width: 50px;
-    border-radius: 50%;
-    margin: 10px 0;
-  }
-  
-  .tutor-level {
-    color: #666;
-    font-size: 0.9em;
-  }
+.main-content {
+display: flex;
+gap: 20px;
+padding: 20px;
+}
 
-  .centro{
-    margin-top: 100px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 20px;
-    
-  }
-  .buscador_materias{
-    
-    margin-left: 50px;
-    
-  }
-  .subject-search {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  .calendar {
-    flex: 1fr;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(255, 255, 255);
-    padding: 10px;
-    border-radius: 30px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-right: 50px;
-  }
-  .top-tutors{
-    
-    display: flex;
-    flex: 1;
-    justify-content: space-between;
-    margin-top: 40px;
-    background-color: #ccc;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    margin-right: 30px;
-    margin-left: 30px;
-    border-radius: 10px;
-    
+.subjects {
+flex: 2;
+}
 
-  }
-  
-    .tutor-cardleft {
-    background-color: white;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 400px;
-    height: 200px;
-    margin-left: 50px;
-    
-  }
-  .tutor-cardcenter {
-    background-color: white;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 400px;
-    height: 200px;
-  }
-  .tutor-cardright {
-    background-color: white;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 400px;
-    height: 200px;
-    margin-right: 50px;
-    
-  }
+.subject-list {
+list-style: none;
+}
+
+.subject-item {
+background-color: white;
+padding: 15px;
+margin-bottom: 10px;
+border-radius: 5px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subject-item span {
+display: block;
+color: #666;
+font-size: 0.9em;
+}
+
+.calendar-icon {
+text-align: center;
+}
+
+.calendar-icon i {
+font-size: 2em;
+margin-bottom: 10px;
+}
+
+.tutors {
+flex: 3;
+display: flex;
+justify-content: space-around;
+gap: 20px;
+}
+
+.stars {
+color: gold;
+margin-bottom: 5px;
+}
+
+.tutor-img {
+width: 50px;
+border-radius: 50%;
+margin: 10px 0;
+}
+
+.tutor-level {
+color: #666;
+font-size: 0.9em;
+}
+
+.centro {
+margin-top: 100px;
+display: grid;
+grid-template-columns: 1fr 1fr;
+column-gap: 20px;
+}
+
+.buscador_materias {
+margin-left: 50px;
+}
+
+.subject-search {
+width: 100%;
+padding: 10px;
+margin-bottom: 10px;
+border-radius: 5px;
+border: 1px solid #ccc;
+}
+
+.calendar {
+flex: 1fr;
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: rgb(255, 255, 255);
+padding: 10px;
+border-radius: 30px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+margin-right: 50px;
+}
+
+.top-tutors {
+display: flex;
+justify-content: space-between;
+margin-top: 40px;
+background-color: #f9f9f9; /* Color de fondo más claro */
+padding-top: 30px;
+padding-bottom: 30px;
+margin-right: 30px;
+margin-left: 30px;
+border-radius: 20px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+.tutor-cardleft,
+.tutor-cardcenter,
+.tutor-cardright {
+background-color: white;
+padding: 20px;
+border-radius: 15px; /* Esquinas redondeadas más suaves */
+box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra más prominente */
+text-align: center;
+width: 30%; /* Tarjetas ocupan un 30% del espacio cada una */
+height: 350px; /* Altura ajustada para que se vean equilibradas */
+transition: transform 0.3s ease, box-shadow 0.3s ease; /* Efecto de hover */
+}
+
+.tutor-cardleft:hover,
+.tutor-cardcenter:hover,
+.tutor-cardright:hover {
+transform: translateY(-10px); /* Mueve las tarjetas ligeramente hacia arriba */
+box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* Aumenta la sombra en hover */
+}
+
+.tutor-cardleft .tutor-img,
+.tutor-cardcenter .tutor-img,
+.tutor-cardright .tutor-img {
+width: 80px; /* Imagen más grande */
+height: 80px;
+border-radius: 50%; /* Hace que la imagen sea circular */
+margin-bottom: 15px; /* Espacio debajo de la imagen */
+object-fit: cover; /* Asegura que la imagen no se distorsione */
+}
+
+.tutor-cardleft .stars,
+.tutor-cardcenter .stars,
+.tutor-cardright .stars {
+color: gold;
+margin-bottom: 10px;
+}
+
+.tutor-cardleft .tutor-name,
+.tutor-cardcenter .tutor-name,
+.tutor-cardright .tutor-name {
+font-size: 1.2rem;
+font-weight: bold;
+color: #333;
+margin-bottom: 8px;
+}
+
+.tutor-cardleft .tutor-level,
+.tutor-cardcenter .tutor-level,
+.tutor-cardright .tutor-level {
+color: #666;
+font-size: 1rem;
+margin-bottom: 15px; /* Espacio entre nivel y el botón */
+}
+
+.tutor-cardleft .button,
+.tutor-cardcenter .button,
+.tutor-cardright .button {
+background-color: #1a2b49; /* Color de fondo del botón */
+color: white;
+padding: 10px 20px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+.tutor-cardleft .button:hover,
+.tutor-cardcenter .button:hover,
+.tutor-cardright .button:hover {
+background-color: #2c3e50; /* Cambio de color en hover */
+}
+
+.tutor-card {
+background-color: white;
+padding: 15px;
+border-radius: 5px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+text-align: center;
+width: 300px;
+height: 300px;
+margin: 10px;
+}
+
+.tutor-img {
+width: 80px;  /* Ajusta el tamaño según sea necesario */
+height: 80px;
+border-radius: 50%;
+margin-bottom: 10px;
+}
+
+.tutor-card p {
+font-size: 1rem;
+color: #333;
+}
+
+.tutor-card strong {
+font-size: 1.2rem;
+color: #1a2b49;
+}

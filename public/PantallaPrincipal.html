@@ -16,59 +16,75 @@
 </head>
 
 <body>
-  <header class="header">
-    <div class="logo"><img src="images/ESCUDO-USS_Horizontal_color.png" alt="Universidad San Sebastián" id="logouss">
+    <header class="header">
+      <div class="logo">
+        <img src="images/ESCUDO-USS_Horizontal_color.png" alt="Universidad San Sebastián" id="logouss">
+      </div>
+
+      <div class="search-container">
+        <input type="text" placeholder="Buscar usuario" class="search-bar" id="searchInput">
+        <button class="search-btn" id="searchButton"><i class="fas fa-search"></i></button>
+      </div>
+
+      <div>
+        <nav class="nav">
+          <a href="chat.html">
+            <button style="padding: 10px 20px; font-size: 16px; cursor: pointer; border: 2px solid #2C3E50; background-color: #2C3E50; color: white; border-radius: 5px;">
+              <i class="fas fa-comment"></i> 
+            </button>
+          </a>
+
+          <a href="#" class="nav-link" id="userRole">Estudiante</a>
+          <a href="#" class="nav-link"><i class="fas fa-bell"></i></a>
+          <img src="images/termait.png" alt="Perfil" class="profile-img" id="profileImage" style="cursor: pointer;">
+          <a href="#" class="logout-link" id="logoutLink">Cerrar sesión</a>
+        </nav>
+      </div>
+    </header>
+
+    <div class="centro">
+      <div class="buscador_materias">
+        <div id="searchResults" class="search-results"></div>
+      </div>
+      <div class="calendar">
+        <div id="calendar"></div>
+      </div>
     </div>
 
-    <div class="search-container">
-      <input type="text" placeholder="Buscar usuario" class="search-bar" id="searchInput">
-      <button class="search-btn" id="searchButton"><i class="fas fa-search"></i></button>
+    <h2 style="text-align: center; margin-top: 50px; background-color: #1a2b49; color: white;">Top Tutores</h2>
+    <div class="top-tutors" id="topTutorsContainer">
+      <!-- Aquí se renderizarán los tutores dinámicamente -->
     </div>
 
-    <!--<div id="searchResults" class="search-results"></div>
-  -->
+    <script>
+      // Cargar tutores al iniciar
+      document.addEventListener('DOMContentLoaded', async function () {
+        const container = document.getElementById('topTutorsContainer');
 
-    <div>
-      <nav class="nav">
-        <a href="chat.html">
-        <button style="padding: 10px 20px; font-size: 16px; cursor: pointer; border: 2px solid #2C3E50; background-color: #2C3E50; color: white; border-radius: 5px;">
-          <i class="fas fa-comment"></i> 
-      </button>
-    </a>
-      
-        <a href="#" class="nav-link" id="userRole">Estudiante</a>
-        <a href="#" class="nav-link"><i class="fas fa-bell"></i></a>
-        <img src="images/termait.png" alt="Perfil" class="profile-img" id="profileImage" style="cursor: pointer;">
-        <a href="#" class="logout-link" id="logoutLink">Cerrar sesión</a>
-      </nav>
-    </div>
-  </header>
+        try {
+          // Solicitar datos al endpoint de tutores
+          const response = await fetch('http://localhost:3000/api/top-tutors');
+          const tutors = await response.json();
 
-  <div class="centro">
-    <div class="buscador_materias">
-      <div id="searchResults" class="search-results"></div>
-      
-    </div>
-    <div class="calendar">
-      <div id="calendar"></div>
-    </div>
-  </div>
-
-  <h2 style="text-align: center;margin-top: 50px;background-color: #1a2b49; color: white;">Top Tutores </h2>
-  <div class="top-tutors">
-    <div class="tutor-cardleft">
-      <p>Tutor 1</p>
-      <p>Especialidad: Matemáticas</p>
-    </div>
-    <div class="tutor-cardcenter">
-      <p>Tutor 2</p>
-      <p>Especialidad: Física</p>
-    </div>
-    <div class="tutor-cardright">
-      <p>Tutor 3</p>
-      <p>Especialidad: Programación</p>
-    </div>
-  </div>
+          if (response.ok && Array.isArray(tutors)) {
+            container.innerHTML = tutors.map(tutor => `
+              <div class="tutor-card">
+                <!-- Si el tutor no tiene una URL de imagen, muestra una predeterminada local -->
+                <img src="${tutor.imagen || 'images/termmait.png'}" alt="${tutor.tutor}" class="tutor-img" onerror="this.src='images/default-image.jpg'">
+                <p><strong>${tutor.tutor}</strong></p>
+                <p>Especialidad: ${tutor.especialidad}</p>
+              </div>
+            `).join('');
+          } else {
+            container.innerHTML = '<p>No se encontraron tutores destacados.</p>';
+          }
+        } catch (error) {
+          console.error('Error al cargar los tutores:', error);
+          container.innerHTML = '<p>Error al cargar los tutores. Por favor, inténtelo más tarde.</p>';
+          
+        }
+      });
+    </script>
 
   <script>
     document.addEventListener('DOMContentLoaded', async function () {

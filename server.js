@@ -7,6 +7,7 @@ const db = require('./config/db');
 const authRoutes = require('./routes/authRoutes'); // Rutas de autenticación
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
+const tutorRoutes = require('./routes/tutorRoutes'); // Importa las rutas de los tutores
 
 const app = express();
 const server = http.createServer(app); // Crear servidor HTTP compartido
@@ -39,6 +40,8 @@ app.use('/images', express.static('public/images'));
 app.use(express.static('public'));
 app.use(express.static('images'));
 
+
+
 // Ruta principal
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
@@ -46,6 +49,8 @@ app.get('/', (req, res) => {
 
 // Rutas de autenticación
 app.use('/api', authRoutes);
+app.use('/api', tutorRoutes); // Prefijo para todas las rutas de tutores
+
 
 // Configuración de Socket.IO
 io.on('connection', (socket) => {
@@ -71,6 +76,7 @@ io.on('connection', (socket) => {
         delete users[socket.id];
     });
 });
+
 
 // Iniciar el servidor
 server.listen(PORT, () => {
